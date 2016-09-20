@@ -1,0 +1,63 @@
+#! usr/bin/env python2.7
+
+import hashlib, argparse, sys, time, datetime
+
+def header():
+    print """
+  _   _           _      ____ _               _             
+ | | | | __ _ ___| |__  / ___| |__   ___  ___| | _____ _ __ 
+ | |_| |/ _` / __| '_ \| |   | '_ \ / _ \/ __| |/ / _ \ '__|
+ |  _  | (_| \__ \ | | | |___| | | |  __/ (__|   <  __/ |   
+ |_| |_|\__,_|___/_| |_|\____|_| |_|\___|\___|_|\_\___|_|   
+                                                            """
+    print "**************This could take a while**************\n\n"
+
+'''
+Wordlist used in testing would cause memory read errors
+open_list() function calls this function for every word
+'''
+def check_hash(word):
+    # stripping newlines prevents false hashes
+    word = word.rstrip('\n')
+    hashed = hashlib.md5(word).hexdigest()
+    if (hashed == to_check):
+        print "[+] Hash found %s = %s" % (to_check, word)
+        """
+        I would like to have a message that says the hash couldn't be found
+        but not repeat for every word that doesn't match
+        """
+
+def open_list(wordlist):
+    try:
+        with open(wordlist) as file:
+            print "[+] Checking known hashes"
+            for word in file:
+                # Need to setup this way to avoid MemoryError
+                check_hash(word)
+    except IOError:
+        print "[-] File not found"
+    except MemoryError:
+        print "[-] File too large"
+    except KeyboardInterrupt:
+        print "[-] Check stopped by user"
+
+def main():
+
+    # Setting up command-line args (more to come)
+    cli_opt = argparse.ArgumentParser(description='A simple MD5 cracker.')
+    cli_opt.add_argument('-m', help='Supplies hash to be cracked')
+    cli_opt.add_argument('-w', help='Wordlist to use for cracking')
+    args = cli_opt.parse_args()
+
+    # Defining these as global helped splitting up functions but there maybe a cleaner way?
+    global to_check
+    to_check = args.m
+    global wordlist
+    wordlist = args.w
+    
+    header()
+    open_list(wordlist)
+
+
+if __name__ == "__main__":
+    main()
