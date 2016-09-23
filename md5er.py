@@ -4,11 +4,11 @@ import hashlib, argparse, sys, time, datetime
 
 def header():
     print """
-  _   _           _      ____ _               _             
- | | | | __ _ ___| |__  / ___| |__   ___  ___| | _____ _ __ 
+  _   _           _      ____ _               _
+ | | | | __ _ ___| |__  / ___| |__   ___  ___| | _____ _ __
  | |_| |/ _` / __| '_ \| |   | '_ \ / _ \/ __| |/ / _ \ '__|
- |  _  | (_| \__ \ | | | |___| | | |  __/ (__|   <  __/ |   
- |_| |_|\__,_|___/_| |_|\____|_| |_|\___|\___|_|\_\___|_|   
+ |  _  | (_| \__ \ | | | |___| | | |  __/ (__|   <  __/ |
+ |_| |_|\__,_|___/_| |_|\____|_| |_|\___|\___|_|\_\___|_|
                                                             """
     print "**************This could take a while**************\n\n"
 
@@ -36,25 +36,27 @@ def open_list(wordlist):
                 check_hash(word)
     except IOError:
         print "[-] File not found"
-    except MemoryError:
-        print "[-] File too large"
+
+    # shouldn't be necessary after some tweaks
+    #except MemoryError:
+        #print "[-] File too large"
+
     except KeyboardInterrupt:
         print "[-] Check stopped by user"
 
 def main():
-
     # Setting up command-line args (more to come)
-    cli_opt = argparse.ArgumentParser(description='A simple MD5 cracker.')
-    cli_opt.add_argument('-m', help='Supplies hash to be cracked')
-    cli_opt.add_argument('-w', help='Wordlist to use for cracking')
+    cli_opt = argparse.ArgumentParser(description='A simple MD5 tester.')
+    cli_opt.add_argument('-m', '--md5', required=True, help='Supplies hash to be cracked')
+    cli_opt.add_argument('-w', '--wordlist', required=True, help='Wordlist to check against')
     args = cli_opt.parse_args()
 
     # Defining these as global helped splitting up functions but there maybe a cleaner way?
     global to_check
-    to_check = args.m
+    to_check = args.md5
     global wordlist
-    wordlist = args.w
-    
+    wordlist = args.wordlist
+
     header()
     open_list(wordlist)
 
