@@ -47,7 +47,7 @@ def open_list(wordlist):
 def main():
     # Setting up command-line args (more to come)
     cli_opt = argparse.ArgumentParser(description='A simple MD5 tester.')
-    cli_opt.add_argument('-m', '--md5', required=True, help='Supplies hash to be cracked')
+    cli_opt.add_argument('-m', '--md5', required=True, help='Supplies hash to be find')
     cli_opt.add_argument('-w', '--wordlist', required=True, help='Wordlist to check against')
     args = cli_opt.parse_args()
 
