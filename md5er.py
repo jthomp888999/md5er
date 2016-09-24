@@ -4,28 +4,21 @@ import hashlib, argparse, sys, time, datetime
 
 def header():
     print """
-  _   _           _      ____ _               _
- | | | | __ _ ___| |__  / ___| |__   ___  ___| | _____ _ __
- | |_| |/ _` / __| '_ \| |   | '_ \ / _ \/ __| |/ / _ \ '__|
- |  _  | (_| \__ \ | | | |___| | | |  __/ (__|   <  __/ |
- |_| |_|\__,_|___/_| |_|\____|_| |_|\___|\___|_|\_\___|_|
-                                                            """
-    print "**************This could take a while**************\n\n"
+ +-+-+-+-+-+
+ |M|D|5|e|r|
+ +-+-+-+-+-+
+    """
+# Wordlist used in testing would cause memory read errors
+# open_list() function calls this function for every word
 
-'''
-Wordlist used in testing would cause memory read errors
-open_list() function calls this function for every word
-'''
 def check_hash(word):
     # stripping newlines prevents false hashes
     word = word.rstrip('\n')
     hashed = hashlib.md5(word).hexdigest()
     if (hashed == to_check):
         print "[+] Hash found %s = %s" % (to_check, word)
-        """
-        I would like to have a message that says the hash couldn't be found
-        but not repeat for every word that doesn't match
-        """
+        # I would like to have a message that says the hash couldn't be found
+        # but not repeat for every word that doesn't match
 
 def open_list(wordlist):
     try:
@@ -36,9 +29,8 @@ def open_list(wordlist):
                 check_hash(word)
     except IOError:
         print "[-] File not found"
-
     # shouldn't be necessary after some tweaks
-    #except MemoryError:
+    # except MemoryError:
         #print "[-] File too large"
 
     except KeyboardInterrupt:
