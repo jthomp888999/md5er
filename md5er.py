@@ -9,11 +9,13 @@ def header():
     +-+-+-+-+-+
     """
 
+# take either the single md5 or the yielded list of md5's and the word from the list, compare them after converting words to md5's
 def Mtch_wd(toChk, word):
     hashed = hashlib.md5(word).hexdigest()
     if toChk == hashed:
         return True
 
+# Open the list of words, strip newlines, yield the result to be itterated over
 def Op_lst(wordlist):
     try:
         with open(wordlist) as file:
@@ -25,17 +27,19 @@ def Op_lst(wordlist):
     except KeyboardInterrupt:
         print "[-] Check stopped by user"
 
+# Open file with list of hashes, strip newlines from hashes, yield the result to be itterated over
 def Op_hsh(hshFle):
     try:
         with open(hshFle) as hshLst:
-            for hash in hshLst:
-                hash = hash.rstrip('\n')
-                yield hash
+            for hshLn in hshLst:
+                hshLn = hshLn.rstrip('\n')
+                yield hshLn
     except IOError:
         print '[-] Hash-list not found'
     except KeyboardInterrupt:
         print '[-] Check stopped by user'
 
+# creating commandline args, decide how to check hashes weather single or from file
 def main():
     header()
     # Setting up command-line args (more to come)
@@ -57,16 +61,18 @@ def main():
            if chkd == True:
                print '[+] %s | %s' % (toChk, word)
 
-     # If giving a file of hashes
+    # If giving a file of hashes
     if args.hashfile:
         hshFle = args.hashfile
         toChk = Op_hsh(hshFle)
         words = Op_lst(wdLst)
-        for chk in toChk:
+        for hshLn in toChk:
+            print hshLn
             for word in words:
-                chkd = Mtch_wd(chk, word)
+                print word
+                chkd = Mtch_wd(hshLn, word)
                 if chkd == True:
-                    print '[+] %s | %s' % (chk, word)
+                    print '[+] %s | %s' % (hshLn, word)
 
 if __name__ == "__main__":
     main()
