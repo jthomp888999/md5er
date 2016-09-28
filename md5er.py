@@ -9,11 +9,7 @@ def header():
     +-+-+-+-+-+
     """
 
-<<<<<<< HEAD
 # take the single md5 md5's and the word from the list, compare them after converting words to md5's
-=======
-# take either the single md5 or the yielded list of md5's and the word from the list, compare them after converting words to md5's
->>>>>>> origin/master
 def Mtch_wd(toChk, word):
     hashed = hashlib.md5(word).hexdigest()
     if toChk == hashed:
@@ -54,15 +50,9 @@ def main():
 
     # Wordlist to check against
     wdLst = args.wordlist
-<<<<<<< HEAD
     toChk = args.md5
     words = Op_lst(wdLst)
 
-=======
-
-    toChk = args.md5
-    words = Op_lst(wdLst)
->>>>>>> origin/master
     for word in words:
         chkd = Mtch_wd(toChk, word)
         if chkd == True:
