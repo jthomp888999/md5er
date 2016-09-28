@@ -44,35 +44,19 @@ def main():
     header()
     # Setting up command-line args (more to come)
     cli_opt = argparse.ArgumentParser(description='A simple MD5 tester.')
-    cli_opt.add_argument('-m', '--md5', required=False, help='Supplies hash to be cracked')
+    cli_opt.add_argument('-m', '--md5', required=True, help='Supplies hash to be cracked')
     cli_opt.add_argument('-w', '--wordlist', required=True, help='Wordlist to check against')
-    cli_opt.add_argument('-f', '--hashfile', required=False, help='List of md5\'s')
     args = cli_opt.parse_args()
 
     # Wordlist to check against
     wdLst = args.wordlist
 
-    # If giving one single hash
-    if args.md5:
-        toChk = args.md5
-        words = Op_lst(wdLst)
-        for word in words:
-           chkd = Mtch_wd(toChk, word)
-           if chkd == True:
-               print '[+] %s | %s' % (toChk, word)
-
-    # If giving a file of hashes
-    if args.hashfile:
-        hshFle = args.hashfile
-        toChk = Op_hsh(hshFle)
-        words = Op_lst(wdLst)
-        for hshLn in toChk:
-            print hshLn
-            for word in words:
-                print word
-                chkd = Mtch_wd(hshLn, word)
-                if chkd == True:
-                    print '[+] %s | %s' % (hshLn, word)
+    toChk = args.md5
+    words = Op_lst(wdLst)
+    for word in words:
+        chkd = Mtch_wd(toChk, word)
+        if chkd == True:
+            print '[+] %s | %s' % (toChk, word)
 
 if __name__ == "__main__":
     main()
