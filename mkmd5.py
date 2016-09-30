@@ -1,3 +1,4 @@
+#!/usr/bin/python2.7
 import hashlib, sys
 
 file = sys.argv[1]
