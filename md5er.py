@@ -25,7 +25,7 @@ def Openlst(wordlist):
     except IOError:
         print "[-] Word-list not found"
     except KeyboardInterrupt:
-        print "[-] Check stopped by user"
+        print "[-] Aborted"
 
 # creating command-line args, decide how to check hashes weather single or from file
 def main():
@@ -44,7 +44,8 @@ def main():
     for word in words:
         test = MatchWord(target, word)
         if test == True:
-            print '[+] %s | %s' % (target, word)
+            print "[+] %s | %s\n" % (target, word)
+            sys.exit("[+] Hash Found")
 
 if __name__ == "__main__":
     main()
