@@ -1,22 +1,31 @@
 #!/usr/bin/python2.7
 import hashlib, sys
 
-file = sys.argv[1]
-
-
-def op_fle(file):
+def OpenFile(file):
 	try:
-		with open(file) as wd_lst:
-			for word in wd_lst:
-				hsh_lst(word)
+		with open(file) as wordList:
+			for words in wordList:
+				yield words
 	except IOError:
-		print 'file not found'
+		print '--file not found--'
 
+def HashList(word):
+    word = word.rstrip('\n')
+    hashWord = hashlib.md5(word).hexdigest()
+    return hashWord
 
-def hsh_lst(word):
-	word = word.rstrip('\n')
-	hsh_wd = hashlib.md5(word).hexdigest()
-	print "%s | %s" % (hsh_wd, word)
+def Main():
+    if len(sys.argv) <= 1:
+        print '--Must specify file--'
+    file = sys.argv[1]
+    words = OpenFile(file)
 
+    try:
+        for word in words:
+            wordHash = HashList(word)
+            print " %s | %s" % (wordHash, word)
+    except KeyboardInterrupt:
+        print '--Aborted--'
 
-op_fle(file)
+if __name__ == "__main__":
+    Main()
