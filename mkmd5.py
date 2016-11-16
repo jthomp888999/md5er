@@ -1,5 +1,12 @@
 #!/usr/bin/python2.7
-import hashlib, sys
+
+####################################
+# Take a file of plaintext words,  # 
+# then convert them to md5's       #
+####################################
+
+import hashlib
+import sys
 
 def OpenFile(file):
 	try:
@@ -7,7 +14,7 @@ def OpenFile(file):
 			for words in wordList:
 				yield words
 	except IOError:
-		print '--file not found--'
+		print "--file not found--"
 
 def HashList(word):
     word = word.rstrip('\n')
@@ -16,7 +23,7 @@ def HashList(word):
 
 def Main():
     if len(sys.argv) <= 1:
-        print '--Must specify file--'
+        print "--Must specify file--"
     file = sys.argv[1]
     words = OpenFile(file)
 
@@ -25,7 +32,7 @@ def Main():
             wordHash = HashList(word)
             print " %s | %s" % (wordHash, word)
     except KeyboardInterrupt:
-        print '--Aborted--'
+        print "--Aborted--"
 
 if __name__ == "__main__":
     Main()
